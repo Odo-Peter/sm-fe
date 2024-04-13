@@ -30,7 +30,7 @@ const Footer = () => {
       </div>
       <div className="flex items-center justify-center mt-4">
         <p className="text-xs text-gray-600">
-          &#169;{new Date().getFullYear()}by SmartChain Limited | All Rights
+          &#169;{new Date().getFullYear()} by SmartChain Limited | All Rights
           Reserved
         </p>
       </div>

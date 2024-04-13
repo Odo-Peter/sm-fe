@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:3003/todo';
+const BASE_URL = 'https://sm-be.onrender.com/todo';
 
 export const getAll = async () => {
   const res = await axios.get(BASE_URL);
