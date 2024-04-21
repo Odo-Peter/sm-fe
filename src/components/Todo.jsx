@@ -4,7 +4,7 @@ import { MdOutlineCheckBoxOutlineBlank } from 'react-icons/md';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { deleteTodo, updateTodo } from '../services/todo';
 
-const Todo = ({ checked, todoText, id }) => {
+const Todo = ({ checked, todoText, id, refetch = false, setRefetch }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
@@ -13,6 +13,7 @@ const Todo = ({ checked, todoText, id }) => {
   const [editTodo, setEditTodo] = useState('');
 
   const handleChecked = async (id) => {
+    setRefetch(refetch);
     setIsLoading(true);
     try {
       await updateTodo({ checked: true }, id);
@@ -21,11 +22,12 @@ const Todo = ({ checked, todoText, id }) => {
       console.log(error);
     } finally {
       setIsLoading(false);
-      window.location.reload();
+      setRefetch(true);
     }
   };
 
   const handleUnChecked = async (id) => {
+    setRefetch(refetch);
     setIsLoading(true);
     try {
       await updateTodo({ checked: false }, id);
@@ -34,11 +36,12 @@ const Todo = ({ checked, todoText, id }) => {
       console.log(error);
     } finally {
       setIsLoading(false);
-      window.location.reload();
+      setRefetch(true);
     }
   };
 
   const handleDelete = async (id) => {
+    setRefetch(refetch);
     setIsDeleting(true);
     try {
       await deleteTodo(id);
@@ -47,21 +50,22 @@ const Todo = ({ checked, todoText, id }) => {
       console.log(error);
     } finally {
       setIsDeleting(false);
-      window.location.reload();
+      setRefetch(true);
     }
   };
 
   const handleUpdate = async (obj, id) => {
+    setRefetch(refetch);
     setIsUpdating(true);
     try {
-      const d = await updateTodo(obj, id);
-      console.log(d);
+      await updateTodo(obj, id);
       setIsUpdating(false);
     } catch (error) {
       console.log(error);
     } finally {
       setIsUpdating(false);
-      window.location.reload();
+      setEditModal(false);
+      setRefetch(true);
     }
   };
 

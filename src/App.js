@@ -12,6 +12,7 @@ function App() {
   const [todos, setTodos] = useState([]);
   const [todoEntry, setTodoEntry] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [refetch, setRefetch] = useState(false);
 
   useEffect(() => {
     getAll().then((data) => setTodos(data));
@@ -39,6 +40,9 @@ function App() {
     }
   };
 
+  const refetchTodos = async () =>
+    await getAll().then((data) => setTodos(data));
+
   return (
     <div className="w-full flex flex-col gap-y-6">
       <Navbar />
@@ -59,9 +63,9 @@ function App() {
             />
             <button
               type="submit"
-              className="p-2 px-4 bg-green-600 text-white rounded-md ml-4"
+              className="p-2 px-4 bg-green-600 hover:bg-green-700 text-white rounded-md ml-4"
             >
-              {isLoading ? 'Adding' : 'Add'}
+              {isLoading ? 'Adding...' : 'Add'}
             </button>
           </form>
         </div>
@@ -74,6 +78,8 @@ function App() {
               checked={todo.checked}
               name={todo.name}
               id={todo.id}
+              refetch={refetch ? refetchTodos() : ''}
+              setRefetch={setRefetch}
             />
           ))}
         </div>
